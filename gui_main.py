@@ -94,7 +94,7 @@ def recognize_face():
         robot_connected = True
     except:
         robot_connected = False
-        print("⚠️ Arduino not connected. Running in face-only mode.")
+        print("Arduino not connected. Running in face-only mode.")
 
     messagebox.showinfo("Recognition Started", "Press Q in the video window to stop.")
 
