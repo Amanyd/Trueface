@@ -112,7 +112,7 @@ def recognize_face():
         known_encodings, known_names = pickle.load(f)
 
     try:
-        arduino = serial.Serial('COM3', 9600, timeout=1)
+        arduino = serial.Serial('COM4', 9600, timeout=1)
         robot_connected = True
     except:
         robot_connected = False
@@ -137,8 +137,11 @@ def recognize_face():
             if best_match_index is not None and distances[best_match_index] < 0.5:
                 name = known_names[best_match_index]
 
-                if robot_connected:
-                    arduino.write((name + "\n").encode())
+            if robot_connected:
+                if name != "Unknown":
+                   arduino.write(b'1\n')  # recognized → move servo
+                else:
+                       arduino.write(b'0\n')  # unrecognized → do nothing
 
                 with open("logs.csv", "a", newline="") as logfile:
                     writer = csv.writer(logfile)
