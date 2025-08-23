@@ -143,7 +143,7 @@ def recognize_face():
                 else:
                        arduino.write(b'0\n')  # unrecognized → do nothing
 
-                with open("logs.csv", "a", newline="") as logfile:
+            with open("logs.csv", "a", newline="") as logfile:
                     writer = csv.writer(logfile)
                     writer.writerow([name, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
