@@ -1,6 +1,11 @@
-import face_recognition
-import pickle
+import cv2
 import os
+import pickle
+
+# Set the path to local face recognition models
+os.environ['FACE_RECOGNITION_MODELS'] = os.path.join(os.getcwd(), 'models', 'face_recognition_models')
+
+import face_recognition
 import cv2
 
 known_faces = []
