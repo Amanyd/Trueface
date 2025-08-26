@@ -1,125 +1,127 @@
-# This is face identification software
 # 🤖 Face Recognition Based Servo Control System
-### Project Title: Development of Face Identification Software and Its Application in Humanoid Robot
 
----
+A real-time face recognition system with Arduino integration, designed to control a servo motor when a registered face is detected.
 
-## 🧠 Overview
+## 🚀 Features
 
-This project demonstrates a real-time **face recognition system** integrated with **Arduino-controlled servo motor**, designed as part of a 6-week training under the ECE Department, Northern Railway Workshop, Lucknow.
+- Real-time face detection and recognition
+- Simple GUI for face registration and recognition
+- Arduino integration for hardware control
+- Cross-platform compatibility
 
-When the system recognizes a registered face through the GUI interface, it sends a signal (`1`) to the Arduino via serial communication, triggering a servo motor to move (e.g., simulate robotic response). If the face is unrecognized, the system sends `0`, and the servo remains still.
+## 🛠️ Prerequisites
 
----
+### For Linux:
+```bash
+# System dependencies
+sudo apt-get update
+sudo apt-get install -y python3 python3-venv python3-dev python3-pip
+sudo apt-get install -y build-essential cmake
+sudo apt-get install -y libx11-dev libatlas-base-dev libgtk-3-dev
+sudo apt-get install -y libjpeg-dev libpng-dev libtiff-dev
+```
 
-## ⚙️ Technologies Used
+### For Windows:
+1. Install Python 3.8+ from [python.org](https://www.python.org/downloads/)
+2. Install [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
-| Component         | Technology            |
-|------------------|-----------------------|
-| GUI              | Python Tkinter        |
-| Face Detection   | OpenCV                |
-| Face Recognition | face_recognition (dlib) |
-| Hardware         | Arduino Uno           |
-| Motor            | Servo Motor (SG90)    |
-| Communication    | Serial (pyserial)     |
+## 🚀 Quick Start
 
----
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd face_robot_project
+   ```
 
-## 🗂️ Project Structure
+2. **Set up virtual environment**
+   ```bash
+   # Linux/macOS
+   python3 -m venv .venv
+   source .venv/bin/activate
+   
+   # Windows
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
 
-face_robot_project/
-│
-├── gui_main.py # Main GUI file (Tkinter-based)
-├── register_faces.py # Module to register new faces
-├── recognizer.py # Face recognition logic
-├── arduino_control.ino # Arduino code (uploaded via Arduino IDE)
-├── encodings.pkl # Serialized facial encodings
-├── requirements.txt # Python libraries list
-├── README.md # This file
-├── /known_faces/ # Folder storing registered face images
+3. **Install Python dependencies**
+   ```bash
+   pip install --upgrade pip setuptools wheel
+   pip install numpy==2.0.0 opencv-python==4.8.0.76 face_recognition==1.3.0 pillow==10.0.0 pyserial
+   ```
 
-markdown
-Copy
-Edit
+4. **Run the application**
+   ```bash
+   python gui_main.py
+   ```
 
----
+## 🖥️ Usage
 
-## 🖼️ System Workflow
+1. **Register Faces**
+   - Click "Register Face"
+   - Enter a name when prompted
+   - Position your face in the camera view
+   - Press 's' to capture multiple angles
+   - Press 'q' when done
 
-1. **Face Registration**
-   - Capture images via webcam and label with a person's name
-   - Store in `/known_faces/`
-   - Create facial encodings and store in `encodings.pkl`
+2. **Start Recognition**
+   - Click "Start Recognition"
+   - The system will identify registered faces
+   - Recognized faces will be displayed with their names
 
-2. **Real-Time Recognition**
-   - GUI captures webcam input
-   - Matches face with known encodings
-   - If recognized:
-     - Display name
-     - Send `1` via Serial to Arduino
-   - Else:
-     - Show "Unknown"
-     - Send `0` to Arduino
+3. **Arduino Integration**
+   - Connect Arduino to the computer
+   - Upload the provided Arduino sketch
+   - The system will automatically detect and use the Arduino
 
-3. **Servo Response**
-   - Arduino receives signal
-   - If `1` → Rotate Servo to simulate action
-   - If `0` → Do nothing
+## 🔌 Hardware Setup
 
----
+### Components:
+- Arduino Uno
+- Servo Motor (SG90)
+- Jumper wires
 
-## 🔌 Hardware Circuit (Servo Motor + Arduino UNO)
-
-**Connections:**
+### Connections:
 | Servo Wire | Arduino Pin |
 |------------|-------------|
-| Orange (Signal) | D9          |
-| Red (VCC)       | 5V          |
-| Brown (GND)     | GND         |
+| Orange (Signal) | D9         |
+| Red (VCC)      | 5V          |
+| Brown (GND)    | GND         |
 
-**Serial Baud Rate:** `9600`
+## 📁 Project Structure
 
----
+```
+face_robot_project/
+├── gui_main.py          # Main application GUI
+├── recognizer.py        # Face recognition logic
+├── register.py          # Face registration script
+├── models/              # Pre-trained models
+├── images/              # Captured face images
+├── encodings.pkl        # Face encodings database
+└── README.md            # This file
+```
 
-## 🧪 How to Run
+## 🔧 Troubleshooting
 
-### 1️⃣ Requirements
+### Common Issues:
+1. **Qt/Wayland Warning**
+   ```bash
+   export QT_QPA_PLATFORM=xcb
+   python gui_main.py
+   ```
 
-Install [Anaconda](https://www.anaconda.com/) (recommended) or ensure Python ≥ 3.8.
+2. **Missing Dependencies**
+   Ensure all system dependencies are installed (see Prerequisites)
 
-### 2️⃣ Create a Virtual Environment
+3. **Arduino Not Detected**
+   - Check USB connection
+   - Verify correct port in code (usually `/dev/ttyUSB0` or `COM3`)
 
-```bash
-conda create -n face_robot python=3.8
-conda activate face_robot
-3️⃣ Install Dependencies
-bash
-Copy
-Edit
-pip install -r requirements.txt
-4️⃣ Upload Arduino Code
-Open arduino_control.ino in Arduino IDE
+## 📝 License
 
-Connect Arduino Uno
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Upload code
+## 🙏 Acknowledgments
 
-5️⃣ Run the GUI
-bash
-Copy
-Edit
-python gui_main.py
-Use the GUI to:
-
-Register face with name
-
-Start recognition
-
-Servo will respond if face is recognized
-
-🧰 requirements.txt
-opencv-python
-face_recognition
-Pillow
-numpy
-pyserial
+- OpenCV and dlib teams for the computer vision libraries
+- Python community for the amazing ecosystem

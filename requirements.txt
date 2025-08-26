@@ -1,0 +1,4 @@
+pyserial
+face_recognition
+Pillow
+opencv-python
