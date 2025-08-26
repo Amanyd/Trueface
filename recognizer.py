@@ -1,8 +1,13 @@
 import cv2
-import face_recognition
+import os
 import pickle
 import serial
 import time
+
+# Set the path to local face recognition models
+os.environ['FACE_RECOGNITION_MODELS'] = os.path.join(os.getcwd(), 'models', 'face_recognition_models')
+
+import face_recognition
 import csv
 from datetime import datetime
 import os
